@@ -14,7 +14,7 @@ from .models import Category
 from .serializers import CategorySerializer
 import json
 from django.http import JsonResponse
-from .models import  Choice
+
 
 # http://127.0.0.1:8000/student/register
 @csrf_exempt
@@ -141,4 +141,4 @@ def Question_list(request):
     if questions is not None and choice is not None and category is not None:
         category=Category.objects.get(category_name=category)
         
-    
+

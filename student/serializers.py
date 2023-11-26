@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Questions, Choice, Category
+from .models import Questions, Category
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
