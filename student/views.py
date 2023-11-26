@@ -131,14 +131,34 @@ def category_list(request):
 from rest_framework.decorators import api_view
 @api_view(['POST'])
 def Question_list(request):
-    questions=request.date.get('question')
-    choice=request.data.get('choice')
-    category=request.data.get('category')
-    mark_type=request.data.get('mark_type')
-    questions_status=request.data.get('status')
-    time_limit=request.data.get('time_limit')
+    questions = request.data.get('question')
+    choice = request.data.get('choice')
+    category_name = request.data.get('category')
+    mark_type = request.data.get('mark_type')
+    questions_status = request.data.get('status')
+    time_limit = request.data.get('time_limit')
 
-    if questions is not None and choice is not None and category is not None:
-        category=Category.objects.get(category_name=category)
+    if questions is not None and choice is not None and category_name is not None:
+        try:
+            category = Category.objects.get(category_name=category_name)
+        except:
+            return Response("Category does not exist")
+        new_question = Questions.objects.create(
+            questions=questions,
+            choices=choice,
+            category=category,
+            mark_type=mark_type,
+            question_status=questions_status,
+            time_limit=time_limit
+        )
+        
+<<<<<<< HEAD
+
+=======
+       
+        return Response("Question saved successfully")
         
 
+    return Response("Incomplete data provided")
+    
+>>>>>>> 7af0ff8a501aa21d42131fd4a7bb834fd5e28c15
