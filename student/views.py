@@ -69,51 +69,14 @@ def Logout(request):
 
 
 @csrf_exempt
-def QuestionsList(request):
-    if request.method == 'GET':
+@api_view(['GET'])
+def Question_list(request):
         # Handle GET request to retrieve questions
         questions = Questions.objects.all()
         serializer = QuestionsSerializer(questions, many=True)
         return JsonResponse(serializer.data, safe=False)
 
-    elif request.method == 'POST':
-        questions_text = request.POST.get('questions', '')
-        category_id = request.POST.get('category', '')
-        mark_type = request.POST.get('mark_type', '')
-        question_status = request.POST.get('question_status', '')
-        time_limit = request.POST.get('time_limit', '')
-
-        # Extract choices from the request
-        choices_data = request.POST.getlist('choices, []')
-
-        # Create a dictionary with the extracted data
-        data = {
-            'questions': questions_text,
-            'category': category_id,
-            'mark_type': mark_type,
-            'question_status': question_status,
-            'time_limit': time_limit,
-            'choices': [{'choice_text': choice_text} for choice_text in choices_data],
-        }
-
-        serializer = QuestionsSerializer(data=data)
-
-        if serializer.is_valid():
-            new_question = serializer.save()
-
-            # Create Choice objects and associate them with the question
-            for choice_text in choices_data:
-                choice = Choice.objects.create(choice_text=choice_text, question=new_question)
-                choice.save()
-
-            # Serialize the question along with its choices
-            serialized_data = QuestionsSerializer(new_question).data
-
-            return JsonResponse(serialized_data, status=201)
-
-        return JsonResponse(serializer.errors, status=400)
-
-    return JsonResponse({'error': 'Invalid request method'}, status=400)
+ 
 @api_view(['GET', 'POST'])
 def category_list(request):
     if request.method == 'GET':
@@ -129,6 +92,8 @@ def category_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 from rest_framework.decorators import api_view
+
+
 @api_view(['POST'])
 def Question_list(request):
     questions = request.data.get('question')
@@ -152,13 +117,8 @@ def Question_list(request):
             time_limit=time_limit
         )
         
-<<<<<<< HEAD
-
-=======
-       
         return Response("Question saved successfully")
         
 
     return Response("Incomplete data provided")
-    
->>>>>>> 7af0ff8a501aa21d42131fd4a7bb834fd5e28c15
+ 
