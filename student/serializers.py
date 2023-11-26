@@ -23,3 +23,8 @@ class QuestionsSerializer(serializers.ModelSerializer):
         question.save()
 
         return question
+    
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        models=Questions
+        fields='__all__'

@@ -158,3 +158,16 @@ def Question_list(request):
 
     return Response("Incomplete data provided")
     
+@api_view(['GET'])
+def Questions(request):
+    category= request.GET.get('parameter')
+
+    if category:
+        category_=Category.objects.get(category_name=category)
+        questions=Questions.objects.filter(category=category_)
+        serializers=QuestionsSerializer(questions,many=True)
+        return Response(serializers.data)
+    else:
+        questions=Questions.objects.all()
+        serializers=QuestionsSerializer(questions,many=True)
+        return Response(serializers.data)
