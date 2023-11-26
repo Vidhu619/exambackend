@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from .models import Questions
-from .serializers import QuestionsSerializer
+from .serializers import *
 from .models import Category
 from .serializers import CategorySerializer
 import json
@@ -67,15 +67,6 @@ def Logout(request):
 
 
 
-
-@csrf_exempt
-@api_view(['GET'])
-def Question_list(request):
-        # Handle GET request to retrieve questions
-        questions = Questions.objects.all()
-        serializer = QuestionsSerializer(questions, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
  
 @api_view(['GET', 'POST'])
 def category_list(request):
@@ -121,4 +112,31 @@ def Question_list(request):
         
 
     return Response("Incomplete data provided")
- 
+
+@api_view(['GET'])
+def Question(request):
+    category_name = request.GET.get('category')
+
+    try:
+        if category_name:
+            category_instance = Category.objects.get(category_name=category_name)
+            questions = Questions.objects.filter(category=category_instance)
+        else:
+            questions = Questions.objects.all()
+
+        serialized_data = [
+           {
+    'id': question.id,
+    'questions': question.questions,
+    'mark_type': question.mark_type,
+    'question_status': question.question_status,
+    'time_limit': question.time_limit,
+    'choices': [choice.strip() for choice in (question.choices.split(',') if question.choices else [])],
+    'category': question.category.id if question.category else None,
+}
+            for question in questions
+        ]
+
+        return Response(serialized_data)
+    except Category.DoesNotExist:
+        return Response({"error": "Category not found"}, status=404)
