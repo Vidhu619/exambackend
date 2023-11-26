@@ -133,4 +133,12 @@ from rest_framework.decorators import api_view
 def Question_list(request):
     questions=request.date.get('question')
     choice=request.data.get('choice')
+    category=request.data.get('category')
+    mark_type=request.data.get('mark_type')
+    questions_status=request.data.get('status')
+    time_limit=request.data.get('time_limit')
+
+    if questions is not None and choice is not None and category is not None:
+        category=Category.objects.get(category_name=category)
+        
     

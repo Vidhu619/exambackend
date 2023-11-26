@@ -17,18 +17,11 @@ class Questions(models.Model):
     mark_type = models.IntegerField()
     question_status = models.BooleanField(default=True)
     time_limit = models.TimeField(blank=True, null=True)
-    choices = models.ManyToManyField('Choice', related_name='question_choices', blank=True)
+    choices = models.CharField(max_length=250, help_text="Enter the choice text",null=True)
 
     def __str__(self):
         return self.questions
-
-class Choice(models.Model):
-    choice_text = models.CharField(max_length=250, help_text="Enter the choice text")
-    question = models.ForeignKey(Questions, on_delete=models.CASCADE, related_name='question_choices')
-
-    def __str__(self):
-        return self.choice_text
-    
+   
 
 class Question_paper(models.Model):
     question_id = models.ManyToManyField(Questions)
