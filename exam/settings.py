@@ -78,15 +78,16 @@ WSGI_APPLICATION = 'exam.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-	'default': {
-	    'ENGINE': 'django.db.backends.mysql',#MySQL engine will be used as the db engine
-	    'NAME': 'exam',#Name of the database created for this project
-	    'USER': 'root',#Enter your mysql username
-	    'PASSWORD': '',#Enter your mysql password
-	    'HOST': 'localhost',
-	    'PORT': '3306',
-	}
-}
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'vidhu$default',
+            'USER': 'vidhu',  #root for local and jishnupr for server
+            'PASSWORD': 'examvidhu',  #password #highonbuzz
+            'HOST': 'vidhu.mysql.pythonanywhere-services.com',  #127.0.0.1 for local # jishnupr.mysql.pythonanywhere-services.com
+            'PORT': '3306',  #3306
+
+        }
+    }
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
@@ -126,7 +127,9 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000","https://highonbuzz.netlify.app/"
+]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
