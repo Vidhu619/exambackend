@@ -82,7 +82,7 @@ DATABASES = {
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'vidhu$default',
             'USER': 'vidhu',  #root for local and jishnupr for server
-            'PASSWORD': 'examvidhu',  #password #highonbuzz
+            'PASSWORD': 'examvidhu@',  #password #highonbuzz
             'HOST': 'vidhu.mysql.pythonanywhere-services.com',  #127.0.0.1 for local # jishnupr.mysql.pythonanywhere-services.com
             'PORT': '3306',  #3306
 
